@@ -1,6 +1,6 @@
-name: 'RepoDynamics: Workflow Context'
-author: 'Armin Ariamajd'
+name: 'RepoDynamics Context'
 description: 'Add workflow contexts to GitHub Actions job summaries.'
+author: 'Armin Ariamajd'
 branding:
   icon: file-text
   color: blue
@@ -16,16 +16,16 @@ runs:
         python-version: '3.x'
 
     - name: 'Install dependencies'
-      run: pip install repodynamics[workflow_context]
+      run: pip install repodynamics[context]
       shell: bash
 
     - name: "Run"
       env:
-        RD__WORKFLOW_CONTEXT__GITHUB: ${{ toJson(github) }}
-        RD__WORKFLOW_CONTEXT__JOB: ${{ toJson(job) }}
-        RD__WORKFLOW_CONTEXT__STEPS: ${{ toJson(steps) }}
-        RD__WORKFLOW_CONTEXT__RUNNER: ${{ toJson(runner) }}
-        RD__WORKFLOW_CONTEXT__STRATEGY: ${{ toJson(strategy) }}
-        RD__WORKFLOW_CONTEXT__MATRIX: ${{ toJson(matrix) }}
-      run: python -m repodynamics.actions workflow_context
+        RD__CONTEXT__GITHUB: ${{ toJson(github) }}
+        RD__CONTEXT__JOB: ${{ toJson(job) }}
+        RD__CONTEXT__STEPS: ${{ toJson(steps) }}
+        RD__CONTEXT__RUNNER: ${{ toJson(runner) }}
+        RD__CONTEXT__STRATEGY: ${{ toJson(strategy) }}
+        RD__CONTEXT__MATRIX: ${{ toJson(matrix) }}
+      run: python -m repodynamics.actions context
       shell: bash
