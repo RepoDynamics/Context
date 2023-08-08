@@ -20,8 +20,7 @@ runs:
     - name: 'Setup Python'
       run: |
         # Setup Python
-        H="\033[1;30;43m"  
-        echo -e "\n${H} 1. Setting up Python \n"
+        echo -e "\n\033[1;30;43m 1. Setting up Python "
       shell: bash
     - uses: actions/setup-python@v4
       with:
@@ -31,20 +30,16 @@ runs:
     - name: 'Install Repodynamics'
       run: |
         # Install Repodynamics
-        H="\033[1;30;43m" 
-        echo -e "\n${H} 2. Installing Repodynamics \n"
-      shell: bash
-    - run: pip install repodynamics[context]
+        echo -e "\n\033[1;30;43m 2. Installing Repodynamics "
+        pip install repodynamics[context]
       shell: bash
 
 
     - name: "Run"
       run: |
         # Run
-        H="\033[1;30;43m" 
-        echo -e "\n${H} 3. Running Repodynamics Context \n"
-      shell: bash
-    - run: python -m repodynamics.actions context
+        echo -e "\n\033[1;30;43m 3. Running Repodynamics Context "
+        python -m repodynamics.actions context
       shell: bash
       env:
         RD__CONTEXT__GITHUB: ${{ toJson(github) }}
