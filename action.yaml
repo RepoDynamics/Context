@@ -20,7 +20,7 @@ runs:
     - name: 'Setup Python'
       run: |
         # Setup Python
-        echo -e "\n\033[1;30;43m 1. Setting up Python "
+        echo -e "\n\033[1;30;43m 1. Setup Python "
       shell: bash
     - uses: actions/setup-python@v4
       with:
@@ -30,7 +30,7 @@ runs:
     - name: 'Install Repodynamics'
       run: |
         # Install Repodynamics
-        echo -e "\n\033[1;30;43m 2. Installing Repodynamics "
+        echo -e "\n\033[1;30;43m 2. Install Repodynamics "
         pip install repodynamics[context]
       shell: bash
 
@@ -38,7 +38,7 @@ runs:
     - name: "Run"
       run: |
         # Run
-        echo -e "\n\033[1;30;43m 3. Running Repodynamics Context "
+        echo -e "\n\033[1;30;43m 3. Run Repodynamics Context "
         python -m repodynamics.actions context
       shell: bash
       env:
