@@ -14,7 +14,7 @@ runs:
       shell: bash
       run: |
         # Intro
-        printf "\n\n$(cat ${{github.action_path}}/logo.txt)\n\n"
+        printf "\n\n$(cat ${{github.action_path}}/logo.txt)\n\n\n"
     
 
     - name: 'Setup Python'
