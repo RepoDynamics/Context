@@ -10,16 +10,42 @@ runs:
   using: "composite"
   steps:
 
+    - name: 'Logo'
+      shell: bash
+      run: |
+        # Intro
+        printf "$(cat ${{github.action_path}}/logo.txt)"
+    
+
     - name: 'Setup Python'
-      uses: actions/setup-python@v4
+      run: |
+        # Setup Python
+        H="\033[1;30;106m"  
+        echo -e "${H}1. Setting up Python"
+      shell: bash
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.x'
 
-    - name: 'Install dependencies'
-      run: pip install repodynamics[context]
+
+    - name: 'Install Repodynamics'
+      run: |
+        # Install Repodynamics
+        H="\033[1;30;106m" 
+        echo -e "${H}2. Installing Repodynamics"
+      shell: bash
+    - run: pip install repodynamics[context]
       shell: bash
 
+
     - name: "Run"
+      run: |
+        # Run
+        H="\033[1;30;106m" 
+        echo -e "${H}3. Running Repodynamics Context"
+      shell: bash
+    - run: python -m repodynamics.actions context
+      shell: bash
       env:
         RD__CONTEXT__GITHUB: ${{ toJson(github) }}
         RD__CONTEXT__JOB: ${{ toJson(job) }}
@@ -27,5 +53,3 @@ runs:
         RD__CONTEXT__RUNNER: ${{ toJson(runner) }}
         RD__CONTEXT__STRATEGY: ${{ toJson(strategy) }}
         RD__CONTEXT__MATRIX: ${{ toJson(matrix) }}
-      run: python -m repodynamics.actions context
-      shell: bash
