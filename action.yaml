@@ -6,45 +6,107 @@ branding:
   color: blue
 
 
+inputs:
+  event-payload:
+    description: |
+      Include the event payload, i.e. the `github.event` context.
+    default: true
+    required: false
+  github:
+    description: |
+      Include the `github` context (this does not include the event payload).
+    default: true
+    required: false
+  env:
+    description: |
+      Include the `env` context.
+    default: true
+    required: false
+  vars:
+    description: |
+      Include the `vars` context.
+    default: true
+    required: false
+  job:
+    description: |
+      Include the `job` context.
+    default: true
+    required: false
+  jobs:
+    description: |
+      Include the `jobs` context.
+    default: true
+    required: false
+  steps:
+    description: |
+      Include the `steps` context.
+    default: true
+    required: false
+  runner:
+    description: |
+      Include the `runner` context.
+    default: true
+    required: false
+  strategy:
+    description: |
+      Include the `strategy` context.
+    default: true
+    required: false
+  matrix:
+    description: |
+      Include the `matrix` context.
+    default: true
+    required: false
+  needs:
+    description: |
+      Include the `needs` context.
+    default: true
+    required: false
+  inputs:
+    description: |
+      Include the `inputs` context.
+    default: false
+    required: false
+
+
 runs:
   using: "composite"
   steps:
 
-    - name: 'Logo'
+    - name: 'Initialize'
       shell: bash
       run: |
         # Intro
         printf "\n\n$(cat ${{github.action_path}}/logo.txt)\n\n\n"
-    
+        echo -e "\n\033[1;30;43m Setup Python "
 
     - name: 'Setup Python'
-      run: |
-        # Setup Python
-        echo -e "\n\033[1;30;43m 1. Setup Python "
-      shell: bash
-    - uses: actions/setup-python@v4
+      uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-
 
     - name: 'Install Repodynamics'
       run: |
         # Install Repodynamics
-        echo -e "\n\033[1;30;43m 2. Install Repodynamics "
+        echo -e "\n\033[1;30;43m Install Repodynamics "
         pip install repodynamics[context]
       shell: bash
-
 
     - name: "Run"
       run: |
         # Run
-        echo -e "\n\033[1;30;43m 3. Run Repodynamics Context "
+        echo -e "\n\033[1;30;43m Create Summary "
         python -m repodynamics.actions context
       shell: bash
       env:
-        RD__CONTEXT__GITHUB: ${{ toJson(github) }}
-        RD__CONTEXT__JOB: ${{ toJson(job) }}
-        RD__CONTEXT__STEPS: ${{ toJson(steps) }}
-        RD__CONTEXT__RUNNER: ${{ toJson(runner) }}
-        RD__CONTEXT__STRATEGY: ${{ toJson(strategy) }}
-        RD__CONTEXT__MATRIX: ${{ toJson(matrix) }}
+        RD_CONTEXT__GITHUB: ${{ toJson(github) }}
+        RD_CONTEXT__ENV: ${{ toJson(env) }}
+        RD_CONTEXT__VARS: ${{ toJson(vars) }}
+        RD_CONTEXT__JOB: ${{ toJson(job) }}
+        RD_CONTEXT__JOBS: ${{ toJson(jobs) }}
+        RD_CONTEXT__STEPS: ${{ toJson(steps) }}
+        RD_CONTEXT__RUNNER: ${{ toJson(runner) }}
+        RD_CONTEXT__STRATEGY: ${{ toJson(strategy) }}
+        RD_CONTEXT__MATRIX: ${{ toJson(matrix) }}
+        RD_CONTEXT__NEEDS: ${{ toJson(needs) }}
+        RD_CONTEXT__INPUTS: ${{ toJson(inputs) }}
