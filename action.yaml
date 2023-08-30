@@ -47,7 +47,10 @@ inputs:
       Include the `matrix` context.
     default: false
     required: false
-
+  requirements-path:
+    description: 'Path to the requirements file.'
+    required: false
+    default: '.github/workflows/requirements/repodynamics.txt'
 
 
 runs:
@@ -59,18 +62,14 @@ runs:
       run: |
         # Intro
         printf "\n\n$(cat ${{github.action_path}}/logo.txt)\n\n\n"
-        echo -e "\n\033[1;30;43m Setup Python "
-
-    - name: 'Setup Python'
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+        echo -e "\n\033[1;30;43m Initialize "
 
     - name: 'Install Repodynamics'
       run: |
         # Install Repodynamics
-        echo -e "\n\033[1;30;43m Install Repodynamics "
-        pip install repodynamics[context]
+        echo "::group::Install Dependencies"
+        python -m pip install -r ${{ inputs.requirements-path }}
+        echo "::endgroup::"
       shell: bash
 
     - name: "Run"
